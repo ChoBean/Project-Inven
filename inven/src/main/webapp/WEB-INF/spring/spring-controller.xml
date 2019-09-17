@@ -1,0 +1,59 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+	xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+	xmlns:mvc="http://www.springframework.org/schema/mvc"
+	xmlns:websocket="http://www.springframework.org/schema/websocket"
+	xsi:schemaLocation=
+	"http://www.springframework.org/schema/mvc 
+	http://www.springframework.org/schema/mvc/spring-mvc-4.1.xsd
+	http://www.springframework.org/schema/beans 
+	http://www.springframework.org/schema/beans/spring-beans.xsd
+	http://www.springframework.org/schema/websocket
+	http://www.springframework.org/schema/websocket/spring-websocket-4.1.xsd">
+	
+	<mvc:annotation-driven/>
+	
+	<mvc:default-servlet-handler />
+
+	<mvc:view-resolvers>
+		<mvc:jsp prefix="/WEB-INF/views/"/>
+	</mvc:view-resolvers>
+
+	<bean id="boardController" class="board.controller.BoardController">
+		<property name="boardService" ref="boardService" />
+		<property name="fileUploadService" ref="fileUploadService"/>
+	</bean>
+	
+	<bean id="loginController" class="board.controller.LoginController">
+		<property name="userService" ref="userService"/>
+	</bean>
+	
+	<bean id="UserController" class="board.controller.UserController">
+		<property name="userService" ref="userService"/>
+		<property name="boardService" ref="boardService"/>
+	</bean>
+	
+	<bean id="characterController" class="board.controller.CharacterController">
+		<property name="characterService" ref="characterService"/>
+	</bean>
+	
+	<bean id="echoHandler" class="board.util.EchoHandler">
+	</bean>
+	
+	<bean id="kartController" class="board.controller.KartController">
+		<property name="kartService" ref="kartService"/>
+	</bean>
+	
+	<bean id="MapInfoController" class="board.controller.MapInfoController">
+		<property name="mapInfoService" ref="mapInfoService"/>
+	</bean>
+	
+	<websocket:handlers>
+		<websocket:mapping handler="echoHandler" path="/echo"/>
+			<websocket:handshake-interceptors> <!--  Websocket에서 Httpsession 객체를 사용하고자 할때 사용 -->
+			<bean id="Interceptor" class="board.util.HandshakeInterceptor" />
+		</websocket:handshake-interceptors>
+		<websocket:sockjs/>
+	</websocket:handlers>
+	<!-- <context:component-scan base-package="board" -->
+</beans>

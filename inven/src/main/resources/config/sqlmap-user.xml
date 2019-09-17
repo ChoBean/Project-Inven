@@ -1,0 +1,102 @@
+<?xml version="1.0" encoding="UTF-8"?>
+
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" "http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="user">
+    <select id="selectByEmail" resultType="board.model.UserVO">
+        <![CDATA[
+          SELECT
+              *
+          FROM
+              USER
+          WHERE
+              EMAIL = #{email}      
+      ]]>
+    </select>
+    <select id="selectByName" resultType="board.model.UserVO">
+        <![CDATA[
+          SELECT
+              *
+          FROM
+              USER
+          WHERE
+              NAME = #{name}      
+      ]]>
+    </select>
+    
+    <select id="selectById" resultType="board.model.UserVO">
+        <![CDATA[
+          SELECT
+              *
+          FROM
+              USER
+          WHERE
+              ID = #{id}       
+      ]]>
+    </select>
+    
+    <select id="selectByPw" resultType="String">
+          SELECT
+              PASSWORD
+          FROM
+              USER
+          WHERE
+              ID = #{id}       
+    </select>
+    
+    
+    <insert id="register">
+        <![CDATA[
+            INSERT INTO USER
+            (
+                EMAIL,
+                ID,
+                NAME,
+                PASSWORD,
+                REGDATE
+            )
+            VALUES
+            (
+                #{email},
+                #{id},
+                #{name},
+                #{pw},
+                SYSDATE()
+            )
+        ]]>
+    </insert>
+    
+    <delete id="delete">
+    	DELETE FROM 
+    		USER
+    		WHERE 
+    		ID = #{id}
+    </delete>
+    
+    <update id="modify">
+    	UPDATE USER
+    	SET
+    		EMAIL = #{email},
+    		NAME = #{name},
+    		PASSWORD = #{pw}
+    	WHERE
+    		ID = #{id}
+    </update>
+    
+    <update id="visit" parameterType="String">
+    	UPDATE USER
+    	SET
+    		VISIT = VISIT + 1 
+    	WHERE
+    	NAME = #{name}
+    </update>
+	
+	<select id="selectByVisit" resultType="int">
+		SELECT
+			VISIT
+		FROM
+			USER
+		WHERE
+			NAME = #{NAME}       
+    </select>
+</mapper>

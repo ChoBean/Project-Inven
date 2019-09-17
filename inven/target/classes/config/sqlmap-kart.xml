@@ -1,0 +1,37 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE mapper PUBLIC "-//mybatis.org//DTD Mapper 3.0//EN" 
+"http://mybatis.org/dtd/mybatis-3-mapper.dtd">
+
+<mapper namespace="kartDao">
+	<select id="getAllCount" resultType="int">
+		SELECT COUNT(*) FROM kart
+	</select>
+	<select id="getAll" parameterType="int" resultType="KartVO">
+		SELECT * FROM kart
+		LIMIT #{start}, 10
+	</select>
+	
+	<select id="getBySearch" parameterType="HashMap" resultType="KartVO">
+		SELECT * FROM kart
+		WHERE kartname LIKE #{search}
+		LIMIT #{start}, 10
+	</select>
+	
+	<select id="getByEngine" parameterType="HashMap" resultType="KartVO">
+		SELECT * FROM kart
+		WHERE engine=#{engine}
+		LIMIT #{start}, 10
+	</select>
+	
+	<select id="getByType" parameterType="HashMap" resultType="KartVO">
+		SELECT * FROM kart
+		WHERE type=#{type}
+		LIMIT #{start}, 10
+	</select>
+	
+	<select id="getByRate" parameterType="HashMap" resultType="KartVO">
+		SELECT * FROM kart
+		WHERE rate=#{rate}
+		LIMIT #{start}, 10
+	</select>
+</mapper>
